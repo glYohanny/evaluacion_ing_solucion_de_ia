@@ -129,10 +129,104 @@ Email/Consulta en Web
 
 ---
 
-## 7. Referencias y Anexos
+## 7. Instrucciones de Ejecución
+
+### Requisitos previos
+- Python 3.11+
+- Git
+- Token de GitHub con acceso a GitHub Models
+
+### 1. Clonar el repositorio
+```bash
+git clone <URL_REPOSITORIO>
+cd evaluacion_ing_solucion_de_ia
+```
+
+### 2. Crear entorno virtual
+
+**Windows (path corto recomendado para evitar error MAX_PATH):**
+```powershell
+python -m venv C:\ev_ia_venv
+C:\ev_ia_venv\Scripts\activate
+```
+
+**Linux/Mac:**
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Instalar dependencias
+```bash
+pip install -r requirements.txt
+pip install gradio
+```
+
+### 4. Configurar variables de entorno
+
+Crear un archivo `.env` en esta carpeta con el siguiente contenido:
+```
+GITHUB_TOKEN=tu_github_token_aqui
+OPENAI_BASE_URL=https://models.inference.ai.azure.com
+GITHUB_BASE_URL=https://models.inference.ai.azure.com
+```
+
+> El `GITHUB_TOKEN` se obtiene en https://github.com/settings/tokens (no requiere permisos especiales para GitHub Models).
+
+### 5. Registrar kernel en Jupyter (solo si se usa el venv de path corto)
+```powershell
+C:\ev_ia_venv\Scripts\python -m ipykernel install --user --name ev_ia_venv --display-name "Python (ev_ia_venv)"
+```
+
+### 6. Ejecutar el notebook
+```bash
+jupyter notebook IA.ipynb
+```
+
+Seleccionar el kernel **"Python (ev_ia_venv)"** y ejecutar las celdas en orden:
+
+| Sección | Celdas | Descripción |
+|---|---|---|
+| IL1.1 | 1-2 | Chatbot con memoria conversacional |
+| IL1.2 | 3-4 | Interfaz Gradio + técnicas de prompting |
+| IL1.3 | 5-8 | Sistema RAG con base de conocimiento TCG |
+| IL1.4 | 9-12 | Métricas de evaluación (Faithfulness, Relevancy, Precision) |
+| IE5-IE7 | 13-19 | Arquitectura, diagrama y justificación técnica |
+
+### 7. Validar el sistema RAG
+Las celdas de IL1.3 ejecutan 3 ejemplos de consultas TCG automáticamente.  
+Las celdas de IL1.4 generan un reporte de evaluación con promedios de las 3 métricas.
+
+### Solución de problemas comunes
+
+| Error | Causa | Solución |
+|---|---|---|
+| `api_key must be set` | `.env` no encontrado o no cargado | Verificar que el archivo `.env` existe en la carpeta del notebook |
+| `OSError: No such file or directory` | Windows MAX_PATH (260 chars) | Crear venv en `C:\ev_ia_venv\` como se indica |
+| `ModuleNotFoundError: gradio` | gradio no incluido en requirements.txt | `pip install gradio` manualmente |
+| Kernel no aparece en Jupyter | Kernel no registrado | Ejecutar paso 5 de estas instrucciones |
+
+---
+
+## 8. Estructura del Repositorio
+
+```
+evaluacion_ing_solucion_de_ia/
+├── IA.ipynb              # Notebook principal con todo el código
+├── informe_tecnico.md    # Informe técnico IE8/IE9 (convertir a PDF para entregar)
+├── README.md             # Este archivo
+├── requirements.txt      # Dependencias Python
+└── .env                  # Variables de entorno (NO subir a GitHub)
+```
+
+---
+
+## 9. Referencias y Anexos
 
 ### Tecnologías Utilizadas
-- **LLM:** GPT-4o (OpenAI)
+- **LLM:** GPT-4o-mini (GitHub Models / Azure Inference)
 - **Framework:** LangChain (gestión de agentes y memoria)
-- **Lenguaje:** Python
-- **Integración:** APIs REST para Email y Web
+- **RAG:** Retrieval léxico sobre base de conocimiento TCG (12 documentos)
+- **UI:** Gradio ChatInterface
+- **Lenguaje:** Python 3.11
+- **Evaluación:** Métricas RAGAS-inspired (Faithfulness, Answer Relevancy, Context Precision)
