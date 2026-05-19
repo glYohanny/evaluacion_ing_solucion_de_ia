@@ -178,7 +178,7 @@ GITHUB_BASE_URL=https://models.inference.ai.azure.com
 C:\ev_ia_venv\Scripts\python -m ipykernel install --user --name ev_ia_venv --display-name "Python (ev_ia_venv)"
 ```
 
-### 6. Ejecutar el notebook
+### 6. Ejecutar EP1 — Chatbot TCG con RAG
 ```bash
 jupyter notebook IA.ipynb
 ```
@@ -193,9 +193,25 @@ Seleccionar el kernel **"Python (ev_ia_venv)"** y ejecutar las celdas en orden:
 | IL1.4 | 9-12 | Métricas de evaluación (Faithfulness, Relevancy, Precision) |
 | IE5-IE7 | 13-19 | Arquitectura, diagrama y justificación técnica |
 
-### 7. Validar el sistema RAG
-Las celdas de IL1.3 ejecutan 3 ejemplos de consultas TCG automáticamente.  
-Las celdas de IL1.4 generan un reporte de evaluación con promedios de las 3 métricas.
+### 7. Ejecutar EP2 — Agente TCG Funcional
+```bash
+jupyter notebook agente_tcg.ipynb
+```
+
+Seleccionar el kernel **"Python (ev_ia_venv)"** y ejecutar las celdas en orden:
+
+| Sección | Celdas | Descripción |
+|---|---|---|
+| IL2.1 | 1-6 | Agente con 3 herramientas (consulta, RAG, cálculo) |
+| IL2.2 | 7-10 | Memoria de corto plazo + recuperación semántica |
+| IL2.3 | 11-13 | Planificación Plan-and-Execute + 4 escenarios de decisión |
+| IL2.4 | 14-17 | Diagrama de orquestación + justificación de componentes |
+| Conclusión | 18 | Reflexión técnica y trabajo futuro |
+
+### 8. Validar el agente
+- Las celdas de IL2.1 ejecutan 3 consultas mostrando la herramienta seleccionada por el agente
+- Las celdas de IL2.2 demuestran memoria en conversación de 5 turnos (el agente recuerda el nombre del usuario)
+- Las celdas de IL2.3 muestran 4 escenarios con decisiones distintas del agente
 
 ### Solución de problemas comunes
 
@@ -212,11 +228,13 @@ Las celdas de IL1.4 generan un reporte de evaluación con promedios de las 3 mé
 
 ```
 evaluacion_ing_solucion_de_ia/
-├── IA.ipynb              # Notebook principal con todo el código
-├── informe_tecnico.md    # Informe técnico IE8/IE9 (convertir a PDF para entregar)
-├── README.md             # Este archivo
-├── requirements.txt      # Dependencias Python
-└── .env                  # Variables de entorno (NO subir a GitHub)
+├── IA.ipynb                  # EP1: Chatbot TCG con RAG (IL1.1 - IL1.4 + IE5-IE7)
+├── agente_tcg.ipynb          # EP2: Agente funcional (IL2.1 - IL2.4)
+├── informe_tecnico.md        # EP1: Informe técnico (IE8/IE9)
+├── informe_tecnico_ep2.md    # EP2: Informe técnico (IE7-IE10)
+├── README.md                 # Este archivo — instrucciones de ejecución
+├── requirements.txt          # Dependencias Python
+└── .env                      # Variables de entorno (NO subir a GitHub)
 ```
 
 ---
